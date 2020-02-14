@@ -8,15 +8,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Person {
-    Random random = new Random();
-    String surname;
-    String name;
-    int age;
-    int height;
-    int weight;
-    int percScatterHeigt = 10;
-    int percScatterWeigt = 15;
-    int temp;
+    private String surname;
+    private String name;
+    private int age;
+    private int height;
+    private int weight;
     private static List<String> names = new ArrayList<>();
     private static List<String> surnames = new ArrayList<>();
 
@@ -25,18 +21,20 @@ public class Person {
         initList("names");
     }
 
-    public Person() {
+    Person() {
+        Random random = new Random();
         this.name = names.get(random.nextInt(names.size()));
         this.surname = surnames.get(random.nextInt(names.size()));
         this.age = random.nextInt(41) + 20;
+        int percScatterHeigt = 10;
         this.height = random.nextInt(180 * 2 * percScatterHeigt / 100) + 180 - 180 * percScatterHeigt / 100;
-        temp = this.height - 100 + (this.age - 20) / 4;
+        int temp = this.height - 100 + (this.age - 20) / 4;
+        int percScatterWeigt = 15;
         this.weight = random.nextInt(temp * 2 * percScatterWeigt / 100) + temp - temp * percScatterWeigt / 100;
     }
 
     private static void initList(String listName) {
-        String fileName = listName;
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(listName))) {
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
                 switch (listName) {
@@ -45,6 +43,9 @@ public class Person {
                         break;
                     case "surnames":
                         surnames.add(currentLine);
+                        break;
+                    default:
+                        break;
                 }
             }
         } catch (IOException e) {
@@ -55,6 +56,6 @@ public class Person {
     @Override
     public String toString() {
         return surname + ' ' + name + ", " +
-                age + " годиков, " + height + " см, " + weight + " кг.";
+                age + " г., " + height + " см, " + weight + " кг.";
     }
 }
